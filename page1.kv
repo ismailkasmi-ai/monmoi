@@ -1,0 +1,115 @@
+<Page1>:
+    MDNavigationLayout:
+
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    MDTopAppBar:
+                        title: "Page 1"
+                        elevation: 10
+                        md_bg_color: app.theme_cls.primary_color
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+                    ScrollView:
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: "16dp"
+                            spacing: "16dp"
+                            size_hint_y: None
+                            height: self.minimum_height
+
+                            MDLabel:
+                                text: "Bonjour"
+                                halign: "center"
+                                font_style: "H4"
+                                theme_text_color: "Primary"
+
+                            MDSeparator:
+                                height: "1dp"
+
+                            MDLabel:
+                                text: "Bienvenue dans l'application. Voici un exemple de layout propre et bien espacé."
+                                halign: "center"
+                                theme_text_color: "Hint"
+
+                            MDRaisedButton:
+                                text: "Aller à la page 2"
+                                pos_hint: {"center_x": 0.5}
+                                on_release:
+                                    app.switch_screen_right("page2")
+
+                            MDRaisedButton:
+                                text: "Aller à la page 3"
+                                pos_hint: {"center_x": 0.5}
+                                on_release:
+                                    app.switch_screen_right("page3")
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (0, 16, 16, 0)
+            elevation: 12
+            md_bg_color: app.theme_cls.bg_dark if app.theme_cls.theme_style == "Dark" else app.theme_cls.bg_normal
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: "16dp"
+                spacing: "16dp"
+
+                # Header avec image + info
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: "12dp"
+                    size_hint_y: None
+                    height: "90dp"
+
+                    Image:
+                        source: app.profil_path if hasattr(app, 'profil_path') else "R.png"
+                        size_hint: None, None
+                        size: "64dp", "64dp"
+                        radius: [32,]
+                        allow_stretch: True
+                        keep_ratio: True
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        spacing: "4dp"
+
+                        MDLabel:
+                            text: "Ismail"
+                            font_style: "Subtitle1"
+                            theme_text_color: "Primary"
+
+                        MDLabel:
+                            text: "ismail.qhste@gmail.com"
+                            font_style: "Caption"
+                            theme_text_color: "Secondary"
+
+                MDSeparator:
+                    height: "1dp"
+
+                ScrollView:
+                    MDList:
+
+                        OneLineIconListItem:
+                            text: "Page 2"
+                            on_release:
+                                app.switch_screen_right("page2")
+                                nav_drawer.set_state("close")
+                            IconLeftWidget:
+                                icon: "arrow-right-bold-box-outline"
+
+                        OneLineIconListItem:
+                            text: "Page 3"
+                            on_release:
+                                app.switch_screen_right("page3")
+                                nav_drawer.set_state("close")
+                            IconLeftWidget:
+                                icon: "layers-triple-outline"
+
+                        OneLineIconListItem:
+                            text: "Quitter"
+                            on_release: app.close_application()
+                            IconLeftWidget:
+                                icon: "exit-to-app"
